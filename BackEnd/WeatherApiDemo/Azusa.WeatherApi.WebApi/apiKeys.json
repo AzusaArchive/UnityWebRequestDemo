@@ -1,0 +1,9 @@
+﻿{
+  // 彩云天气和高德地图API请求令牌将会在一个月内删除，想要使用的同学请自行前往
+  // https://console.amap.com/dev/key/app 以及
+  // https://platform.caiyunapp.com/application/manage 申请API令牌
+  "ApiKeys": {
+    "CaiYunWeatherApiKey": "DZTNuwMaEohyggM4",
+    "AMapApiKey": "ab514c1bb84712015cb26f37e98c1ace"
+  }
+}
