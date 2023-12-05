@@ -13,19 +13,19 @@
 
 ## 基于MVC架构的数据可视化
 
-项目使用MVC架构构建用户界面，定义数据模型，分离界面逻辑与数据处理逻辑。  
+项目基于MVC架构构建用户界面，定义数据模型，分离界面逻辑与数据处理逻辑。  
 
 ***Mvc架构***:  
 
-- **Model**: 数据模型的定义 *对应类：*`WeatherInfo`,`DayWeather`
+- **Model**: 数据模型的定义
 
-> 数据类型的定义，用于界面层以及控制器层的数据传输，以及前后端数据的对接。
+> 数据类型的定义，用于界面层以及控制器层的数据传输，以及客户端与服务端数据的对接。
 
-- **View**: 界面样式，逻辑以及交互的处理 *对应类：*`DayWeather`,`WeatherView`,`Loading`
+- **View**: 界面样式，逻辑以及交互的处理
 
 > 用于界面的数据呈现，样式控制，按钮、输入框等交互事件的绑定。
 
-- **Controller**: 数据的请求和处理 *对应类：*`WeatherController`
+- **Controller**: 数据的请求和处理
 
 > 对服务端的网络请求，数据的获取与处理。  
 
@@ -33,9 +33,9 @@
 
 ## 前后端分离架构与网络请求
 
-Unity客户端不应当在程序中直接访问数据库进行数据存取，体积较大或是重要的数据一般通过请求服务端来获取。
+Unity客户端通常不在程序中直接访问数据库进行数据存取，流量较大，或是重要的数据一般通过请求服务端来获取。
 
-前后端分离即界面与数据分离， 此项目中前端即为Unity客户端，而后端需要使用WebAPI框架(ASP.NET, Spring, Flask, Node.js)自行搭建。
+前后端分离即界面与数据分离，该项目中Unity客户端作为前端，并使用ASP .NET Core作为后端。
 
 ## HTTP请求方法(Method)
 
@@ -61,7 +61,7 @@ var putReq = UnityWebRequest.Put(string url); // PUT
 var deleteReq = UnityWebRequest.Delete(string url); // DELETE
 
 // 调用SendWebRequest方法发送网络请求
-// 调用后Unity会自动创建协程来监听服务器响应
+// 基于Unity协同程序的异步方法
 getReq.SendWebRequest();
 
 // 异步任务需要通过回调函数来获取结果
@@ -72,6 +72,7 @@ void OnCompleted(AsyncOperation op)
     var webReqOp = op as UnityWebRequestAsyncOperation; // 将AsyncOperation断言为UnityWebRequestAsyncOperation类型
     var webReq = op.webRequest; // 访问网络请求对象
     if (webReq.isNetworkError || webReq.isHttpError) // 检查是否出现错误
+        throw new ApplicationException("请求出现错误");
     // NetworkError:网络相关错误
     // HttpError:Http通信错误，可能是请求的连接或内容有误，或是服务器出现错误(Http 4xx,5xx)
     // PS: 以上两个属性在Unity2020被废弃，请使用 webReq.result枚举来判定错误

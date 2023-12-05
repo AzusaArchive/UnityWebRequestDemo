@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -8,20 +8,13 @@
         <NoWarn>1591</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Azusa.Shared\Azusa.Shared.csproj" />
       <ProjectReference Include="..\Azusa.Shared\Azusa.Shared.csproj" />
       <ProjectReference Include="..\Azusa.WeatherApi.UnitySharedDomain\Azusa.WeatherApi.UnitySharedDomain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="CityCode.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
     </ItemGroup>
 
     <ItemGroup>

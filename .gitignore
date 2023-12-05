@@ -54,5 +54,6 @@ obj/
 # jetbrains IDE dir
 .idea/
 
-# Unity release
+# Release
 /FrontEnd/WebRequestDemo/[Rr]elease/
+/Release/
