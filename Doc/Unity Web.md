@@ -33,13 +33,13 @@
 
 ## 前后端分离架构与网络请求
 
-Unity客户端通常不在程序中直接访问数据库进行数据存取，流量较大，或是重要的数据一般通过请求服务端来获取。
+客户端通常不在程序中直接访问数据库进行数据存取，流量较大，或是重要的数据一般通过请求服务端来获取。
 
-前后端分离即界面与数据分离，该项目中Unity客户端作为前端，并使用ASP .NET Core作为后端。
+前后端分离即界面与数据分离，这样的架构有利于项目的分工和解耦，并减少客户端的性能消耗。
 
 ## HTTP请求方法(Method)
 
-前后端的数据对接通常使用[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)协议进行传输，并在HTTP报文体中使用JSON字符串的形式存储数据。  
+前后端的数据对接通常使用[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)协议进行传输，并在HTTP报文体中使用JSON或XML的形式存储数据。  
 客户端通过不同的[HTTP请求方法](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)来向后端指示请求的操作，常用的HTTP方法有：
 
 - `GET` 仅向服务器请求检索数据
@@ -48,10 +48,12 @@ Unity客户端通常不在程序中直接访问数据库进行数据存取，流
 - `DELETE` 请求服务器删除指定的资源
 - ...
 
+> 以上请求方法的描述符合[RESTful Api规范](https://restfulapi.cn/)，具体的请求操作取决于服务端
+
 ## Unity WebRequest
 
 `UnityEngine.Networking`命名空间提供了一些API来进行网络请求。  
-Unity常用`UnityWebRequest`类进行HTTP请求，通过类中的静态方法即可快速对后端进行请求。
+Unity常用`UnityWebRequest`类进行HTTP请求，通过类中的静态方法即可快速对服务端进行请求。
 
 ```cs
 // 访问以下方法来创建请求对象
@@ -78,6 +80,8 @@ void OnCompleted(AsyncOperation op)
     // PS: 以上两个属性在Unity2020被废弃，请使用 webReq.result枚举来判定错误
 
     var text = webReq.downloadHandler.text; // 访问下载处理器来获取响应的文字或字节流
+    var data = webReq.downloadHandler.data; // 访问下载处理器来获取响应的二进制数据
+
     print(text);
 }
 ```
@@ -152,9 +156,11 @@ Unity中有多种方案进行Json(反)序列化：
 > - `Newtonsoft.Json`在新版本Unity中可以通过包管理器引入，2018版本似乎不支持，但可以通过载入
 
 ## 关于后端服务的搭建
+
 后端服务可使用各类Web框架来搭建，如`Flask`, `Node.js`(`Express.js`, `Sails.js`等), `ASP .NET Core`, `Spring`等各类框架。  
 
 使用`Express.js`搭建简易API的案例：
+
 ```js
 const express = require('express') // 引入express.js包
 const app = express() //创建web应用实例
@@ -173,4 +179,5 @@ app.listen(port, () => {
 
 使用`Node.js`环境安装`Express.js`并运行以上代码，即可在本机的 `http://localhost:7890` 路径上部署一个Web服务器，请求`http://localhost:7890/Hello`路径即可得到 `"Hello World!"` 文本。
 
-> 该示例项目的后端使用`.NET 8`搭建，具体代码请参考`WeatherApiDemo`文件夹。
+> - 该示例项目的后端使用`.NET 8`搭建，具体代码请参考`WeatherApiDemo`文件夹。
+> - 项目源码，文档以及发布文件已经上传至github仓库：<https://github.com/AzusaArchive/UnityWebRequestDemo>
