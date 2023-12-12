@@ -138,7 +138,7 @@ Unity中有多种方案进行Json(反)序列化：
 
     Model obj;
     string json = JsonSerializer.Serialize(obj);
-    Model model = JsonSerializer.Deserialize<DateTime>(json);
+    Model model = JsonSerializer.Deserialize<Model>(json);
     ```
 
 - 使用`Newtonsoft.Json`(第三方Nuget包，性能一般，拥有完善的类型适配以及强大的反序列化功能)
